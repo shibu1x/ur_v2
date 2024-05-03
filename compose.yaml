@@ -1,0 +1,27 @@
+services:
+  app_dev:
+    # docker compose run --rm --entrypoint '' app_dev /bin/bash
+    build:
+      dockerfile: Dockerfile-dev
+    command: [ "sleep", "infinity" ]
+    environment:
+      - TZ=Asia/Tokyo
+      - DBUSER=dev
+      - DBPASS=dev
+    volumes:
+      - .:/app:delegated
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - TZ=Asia/Tokyo
+      - MYSQL_ROOT_PASSWORD=root
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_0900_as_ci",
+        "--performance-schema=false",
+      ]
+    ports:
+      - "3306:3306"

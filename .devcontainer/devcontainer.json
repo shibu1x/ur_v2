@@ -1,0 +1,7 @@
+//devcontainer.json
+{
+    "name": "Go",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "app_dev",
+    "workspaceFolder": "/app"
+}
