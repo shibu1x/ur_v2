@@ -84,6 +84,14 @@ type JsonData []struct {
 
 // 建物にある部屋の情報を取得する
 func (h *House) UpdateRooms() {
+
+	log.Println(h.Code)
+
+	if time.Since(h.RoomsGotAt).Hours() < 12 {
+		// 前回取得から一定時間経過していない
+		return
+	}
+
 	now := time.Now()
 	for i := 0; i < 100; i++ {
 		data := h.getRooms(i)
@@ -142,7 +150,7 @@ func (h *House) getRooms(index int) JsonData {
 	}
 
 	resp, err := http.Post(
-		"https://chintai.sumai.ur-net.go.jp/chintai/api/bukken/detail/detail_bukken_room/",
+		"https://chintai.r6.ur-net.go.jp/chintai/api/bukken/detail/detail_bukken_room/",
 		"application/x-www-form-urlencoded",
 		strings.NewReader(url.Values(params).Encode()),
 	)

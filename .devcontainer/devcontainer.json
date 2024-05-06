@@ -1,7 +1,15 @@
-//devcontainer.json
 {
-    "name": "Go",
     "dockerComposeFile": "../compose.yaml",
     "service": "app_dev",
-    "workspaceFolder": "/app"
+    "runServices": [
+        "mysql"
+    ],
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go"
+            ]
+        }
+    }
 }

@@ -2,7 +2,9 @@ services:
   app_dev:
     # docker compose run --rm --entrypoint '' app_dev /bin/bash
     build:
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    tty: true
     command: [ "sleep", "infinity" ]
     environment:
       - TZ
@@ -29,7 +31,7 @@ services:
       [
         "--character-set-server=utf8mb4",
         "--collation-server=utf8mb4_0900_as_ci",
-        "--performance-schema=false",
+        "--performance-schema=false"
       ]
     ports:
       - "3306:3306"

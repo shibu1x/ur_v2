@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 	"time"
 
@@ -60,7 +59,6 @@ func (p *Pref) updateHouses() {
 			fmt.Println("Did not match. " + href)
 			return
 		}
-		log.Println(matches[1])
 
 		var house House
 		err := DB.Where("code = ?", matches[1]).First(&house).Error
