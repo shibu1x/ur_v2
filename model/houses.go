@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -140,11 +141,16 @@ func (h *House) getRooms(index int) JsonData {
 		params[k] = v
 	}
 
-	resp, _ := http.Post(
+	resp, err := http.Post(
 		"https://chintai.sumai.ur-net.go.jp/chintai/api/bukken/detail/detail_bukken_room/",
 		"application/x-www-form-urlencoded",
 		strings.NewReader(url.Values(params).Encode()),
 	)
+
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
 
 	defer resp.Body.Close()
 

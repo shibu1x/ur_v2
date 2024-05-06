@@ -5,18 +5,26 @@ services:
       dockerfile: Dockerfile-dev
     command: [ "sleep", "infinity" ]
     environment:
-      - TZ=Asia/Tokyo
-      - DBUSER=dev
-      - DBPASS=dev
+      - TZ
+      - DBUSER
+      - DBPASS
     volumes:
       - .:/app:delegated
+  app:
+    image: ghcr.io/shibu1x/ur_v2
+    environment:
+      - TZ
+      - DBUSER
+      - DBPASS
+    depends_on:
+      - mysql
   mysql:
     image: mysql:8.0
     volumes:
       - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
     environment:
-      - TZ=Asia/Tokyo
-      - MYSQL_ROOT_PASSWORD=root
+      - TZ
+      - MYSQL_ROOT_PASSWORD
     command:
       [
         "--character-set-server=utf8mb4",

@@ -2,8 +2,6 @@
 # Build the application from source
 FROM golang:1-bookworm AS build-stage
 
-ARG PACKAGE_NAME=ur_v2
-
 WORKDIR /app
 
 COPY go.mod go.sum ./
@@ -11,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /{PACKAGE_NAME}
+RUN CGO_ENABLED=0 GOOS=linux go build -o /ur_v2
 
 # # Run the tests in the container
 # FROM build-stage AS run-test-stage
@@ -22,8 +20,8 @@ FROM gcr.io/distroless/base-debian11 AS build-release-stage
 
 WORKDIR /
 
-COPY --from=build-stage /{PACKAGE_NAME} /{PACKAGE_NAME}
+COPY --from=build-stage /ur_v2 /ur_v2
 
 USER nonroot:nonroot
 
-ENTRYPOINT ["/${PACKAGE_NAME}"]
+ENTRYPOINT ["/ur_v2"]
